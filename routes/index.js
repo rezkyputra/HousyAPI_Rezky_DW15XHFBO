@@ -2,27 +2,33 @@ const express = require("express");
 const router = express.Router();
 const {
   index: findUsers,
-  show: findUser,
-  showUser: findTheUser,
-  create: createUser,
-  update: updateUser,
   destroy: deleteUser,
 } = require("../controllers/user");
+const {
+  index: findHouses,
+  show: findHouse,
+  create: addHouse,
+  update: updateHouse,
+  destroy: deleteHouse,
+} = require("../controllers/house");
 const { login, register } = require("../controllers/auth");
 
 // Middlewares
 const { authenticated } = require("../middlewares/auth");
 
 // Auth routes
-router.post("/login", login);
-router.post("/register", register);
+router.post("/signin", login);
+router.post("/signup", register);
+
+//House Houses
+router.get("/houses", findHouses);
+router.get("/house/:id", findHouse);
+router.post("/house", authenticated, addHouse);
+router.patch("/house/:id", authenticated, updateHouse);
+router.delete("/house/:id", authenticated, deleteHouse);
 
 // User
 router.get("/users", findUsers);
-router.get("/user", findTheUser);
-router.get("/user/:id", findUser);
-router.post("/users", createUser);
-router.patch("/user/:id", updateUser);
 router.delete("/user/:id", deleteUser);
 
 module.exports = router;
