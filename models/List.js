@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
     {}
   );
   List.associate = function (models) {
-    List.belongsTo(models.User);
+    List.hasMany(models.User);
   };
   return List;
 };

@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     {}
   );
   User.associate = function (models) {
-    User.hasOne(models.List);
+    User.belongsTo(models.List);
   };
   return User;
 };
