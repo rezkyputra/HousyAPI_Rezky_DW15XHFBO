@@ -11,6 +11,12 @@ const {
   update: updateHouse,
   destroy: deleteHouse,
 } = require("../controllers/house");
+const {
+  index: findOrders,
+  show: findOrder,
+  create: addOrder,
+  update: updateOrder,
+} = require("../controllers/transaction");
 const { login, register } = require("../controllers/auth");
 
 // Middlewares
@@ -26,6 +32,12 @@ router.get("/house/:id", findHouse);
 router.post("/house", authenticated, addHouse);
 router.patch("/house/:id", authenticated, updateHouse);
 router.delete("/house/:id", authenticated, deleteHouse);
+
+//order
+router.get("/orders", findOrders);
+router.get("/order/:id", findOrder);
+router.post("/order", authenticated, addOrder);
+router.patch("/order/:id", authenticated, updateOrder);
 
 // User
 router.get("/users", findUsers);
