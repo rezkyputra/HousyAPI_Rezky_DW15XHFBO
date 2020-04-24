@@ -13,12 +13,13 @@ module.exports = (sequelize, DataTypes) => {
         defauldValue: "waiting payment",
       },
       attachment: DataTypes.STRING,
+      userId: DataTypes.INTEGER,
     },
     {}
   );
   transaction.associate = function (models) {
     transaction.belongsTo(models.House);
-    // transaction.belongsTo(models.User);
+    transaction.belongsTo(models.User);
   };
   return transaction;
 };

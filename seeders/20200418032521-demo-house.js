@@ -15,6 +15,7 @@ module.exports = {
           ameneties: "Furnished",
           bedRoom: 3,
           bathRoom: 2,
+          userId: 1,
           createdAt: new Date(),
           updatedAt: new Date(),
         },

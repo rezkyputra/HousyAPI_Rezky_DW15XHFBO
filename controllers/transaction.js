@@ -1,4 +1,4 @@
-const { House, transaction, City } = require("../models");
+const { House, transaction, City, User, List } = require("../models");
 
 exports.index = async (req, res) => {
   try {
@@ -7,17 +7,41 @@ exports.index = async (req, res) => {
         {
           model: House,
           attributes: {
-            exclude: ["createdAt", "updatedAt", "CityId", "cityId"],
+            exclude: [
+              "createdAt",
+              "updatedAt",
+              "CityId",
+              "UserId",
+              "cityId",
+              "userId",
+            ],
           },
           include: [
             {
               model: City,
               attributes: { exclude: ["createdAt", "updatedAt"] },
             },
+            {
+              model: User,
+              attributes: ["id", "username"],
+            },
           ],
         },
+        {
+          model: User,
+          attributes: ["id", "username"],
+        },
       ],
-      attributes: { exclude: ["createdAt", "updatedAt", "HouseId", "houseId"] },
+      attributes: {
+        exclude: [
+          "createdAt",
+          "updatedAt",
+          "HouseId",
+          "houseId",
+          "UserId",
+          "userId",
+        ],
+      },
     });
     res.send({ data: order });
   } catch (error) {
@@ -34,17 +58,41 @@ exports.create = async (req, res) => {
         {
           model: House,
           attributes: {
-            exclude: ["createdAt", "updatedAt", "CityId", "cityId"],
+            exclude: [
+              "createdAt",
+              "updatedAt",
+              "CityId",
+              "UserId",
+              "cityId",
+              "userId",
+            ],
           },
           include: [
             {
               model: City,
-              attributes: { exclude: ["createdAt", "updatedAt"] },
+              attributes: ["id", "name"],
+            },
+            {
+              model: User,
+              attributes: ["id", "username"],
             },
           ],
         },
+        {
+          model: User,
+          attributes: ["id", "username"],
+        },
       ],
-      attributes: { exclude: ["createdAt", "updatedAt", "HouseId", "houseId"] },
+      attributes: {
+        exclude: [
+          "createdAt",
+          "updatedAt",
+          "HouseId",
+          "houseId",
+          "UserId",
+          "userId",
+        ],
+      },
     });
     res.send({ data: newOrder });
   } catch (error) {
@@ -60,18 +108,48 @@ exports.update = async (req, res) => {
         {
           model: House,
           attributes: {
-            exclude: ["createdAt", "updatedAt", "CityId", "cityId"],
+            exclude: [
+              "createdAt",
+              "updatedAt",
+              "CityId",
+              "UserId",
+              "cityId",
+              "userId",
+            ],
           },
           include: [
             {
               model: City,
               attributes: { exclude: ["createdAt", "updatedAt"] },
             },
+            {
+              model: User,
+              attributes: ["id", "username"],
+            },
+          ],
+        },
+        {
+          model: User,
+          attributes: ["id", "username"],
+          include: [
+            {
+              model: List,
+              attributes: ["id", "name"],
+            },
           ],
         },
       ],
       where: { id: req.params.id },
-      attributes: { exclude: ["createdAt", "updatedAt", "HouseId", "houseId"] },
+      attributes: {
+        exclude: [
+          "createdAt",
+          "updatedAt",
+          "HouseId",
+          "houseId",
+          "UserId",
+          "userId",
+        ],
+      },
     });
     res.send({ data: order });
   } catch (error) {
@@ -86,18 +164,48 @@ exports.show = async (req, res) => {
         {
           model: House,
           attributes: {
-            exclude: ["createdAt", "updatedAt", "CityId", "cityId"],
+            exclude: [
+              "createdAt",
+              "updatedAt",
+              "CityId",
+              "cityId",
+              "UserId",
+              "userId",
+            ],
           },
           include: [
             {
               model: City,
               attributes: { exclude: ["createdAt", "updatedAt"] },
             },
+            {
+              model: User,
+              attributes: ["id", "username"],
+            },
+          ],
+        },
+        {
+          model: User,
+          attributes: ["id", "username"],
+          include: [
+            {
+              model: List,
+              attributes: ["id", "name"],
+            },
           ],
         },
       ],
       where: { id: req.params.id },
-      attributes: { exclude: ["createdAt", "updatedAt", "HouseId", "houseId"] },
+      attributes: {
+        exclude: [
+          "createdAt",
+          "updatedAt",
+          "HouseId",
+          "houseId",
+          "UserId",
+          "userId",
+        ],
+      },
     });
     res.send({ data: order });
   } catch (error) {

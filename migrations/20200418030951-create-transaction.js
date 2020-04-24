@@ -1,45 +1,53 @@
 "use strict";
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable("Houses", {
+    return queryInterface.createTable("transactions", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      name: {
-        type: Sequelize.STRING,
+      checkin: {
+        allowNull: false,
+        type: Sequelize.DATE,
       },
-      cityId: {
+      checkout: {
+        allowNull: false,
+        type: Sequelize.DATE,
+      },
+      houseId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: "Cities",
+          model: "Houses",
           key: "id",
         },
         onUpdate: "RESTRICT",
         onDelete: "RESTRICT",
       },
-      address: {
-        type: Sequelize.STRING,
-      },
-      price: {
+      total: {
+        allowNull: false,
         type: Sequelize.INTEGER,
       },
-      typeRent: {
+      status: {
         type: Sequelize.ENUM,
-        values: ["day", "month", "year"],
-        defauldValue: "year",
+        values: ["waiting payment", "pending", "cancel"],
+        defauldValue: "waiting payment",
       },
-      ameneties: {
+      attachment: {
+        allowNull: false,
         type: Sequelize.STRING,
       },
-      bedRoom: {
+      userId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
-      },
-      bathRoom: {
-        type: Sequelize.INTEGER,
+        references: {
+          model: "Users",
+          key: "id",
+        },
+        onUpdate: "RESTRICT",
+        onDelete: "RESTRICT",
       },
       createdAt: {
         allowNull: false,
@@ -52,6 +60,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("Houses");
+    return queryInterface.dropTable("transactions");
   },
 };

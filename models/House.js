@@ -24,11 +24,13 @@ module.exports = (sequelize, DataTypes) => {
       },
       bedRoom: DataTypes.INTEGER,
       bathRoom: DataTypes.INTEGER,
+      userId: DataTypes.INTEGER,
     },
     {}
   );
   House.associate = function (models) {
     House.belongsTo(models.City);
+    House.belongsTo(models.User);
     House.hasMany(models.transaction);
   };
   return House;

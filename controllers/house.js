@@ -1,4 +1,4 @@
-const { House, City } = require("../models");
+const { House, City, User, List } = require("../models");
 const { Op } = require("sequelize");
 
 exports.index = async (req, res) => {
@@ -10,6 +10,16 @@ exports.index = async (req, res) => {
             model: City,
             attributes: ["id", "name"],
           },
+          {
+            model: User,
+            attributes: ["id", "username"],
+            include: [
+              {
+                model: List,
+                attributes: ["id", "name"],
+              },
+            ],
+          },
         ],
         where: {
           [Op.and]: [
@@ -17,7 +27,16 @@ exports.index = async (req, res) => {
             { price: { [Op.lt]: req.query.belowPrice } },
           ],
         },
-        attributes: { exclude: ["createdAt", "updatedAt", "CityId"] },
+        attributes: {
+          exclude: [
+            "createdAt",
+            "updatedAt",
+            "UserId",
+            "CityId",
+            "userId",
+            "cityId",
+          ],
+        },
       });
       res.send({ data: houses });
     } else if (req.query.typeRent || req.query.belowPrice) {
@@ -27,6 +46,16 @@ exports.index = async (req, res) => {
             model: City,
             attributes: ["id", "name"],
           },
+          {
+            model: User,
+            attributes: ["id", "username"],
+            include: [
+              {
+                model: List,
+                attributes: ["id", "name"],
+              },
+            ],
+          },
         ],
         where: {
           [Op.or]: [
@@ -34,7 +63,16 @@ exports.index = async (req, res) => {
             { price: { [Op.lt]: req.query.belowPrice } },
           ],
         },
-        attributes: { exclude: ["createdAt", "updatedAt", "CityId"] },
+        attributes: {
+          exclude: [
+            "createdAt",
+            "updatedAt",
+            "UserId",
+            "CityId",
+            "userId",
+            "cityId",
+          ],
+        },
       });
 
       res.send({ data: houses });
@@ -45,8 +83,27 @@ exports.index = async (req, res) => {
             model: City,
             attributes: ["id", "name"],
           },
+          {
+            model: User,
+            attributes: ["id", "username"],
+            include: [
+              {
+                model: List,
+                attributes: ["id", "name"],
+              },
+            ],
+          },
         ],
-        attributes: { exclude: ["createdAt", "updatedAt", "CityId"] },
+        attributes: {
+          exclude: [
+            "createdAt",
+            "updatedAt",
+            "UserId",
+            "CityId",
+            "userId",
+            "cityId",
+          ],
+        },
       });
 
       res.send({ data: houses });
@@ -65,9 +122,26 @@ exports.show = async (req, res) => {
           model: City,
           attributes: { exclude: ["createdAt", "updatedAt"] },
         },
+        {
+          model: User,
+          attributes: ["id", "username"],
+          include: [
+            {
+              model: List,
+              attributes: ["id", "name"],
+            },
+          ],
+        },
       ],
       attributes: {
-        exclude: ["createdAt", "updatedAt", "cityId", "CityId"],
+        exclude: [
+          "createdAt",
+          "updatedAt",
+          "UserId",
+          "CityId",
+          "userId",
+          "cityId",
+        ],
       },
     });
     res.send({ data: house });
@@ -86,8 +160,27 @@ exports.create = async (req, res) => {
           model: City,
           attributes: { exclude: ["createdAt", "updatedAt"] },
         },
+        {
+          model: User,
+          attributes: ["id", "username"],
+          include: [
+            {
+              model: List,
+              attributes: ["id", "name"],
+            },
+          ],
+        },
       ],
-      attributes: { exclude: ["createdAt", "updatedAt", "CityId", "cityId"] },
+      attributes: {
+        exclude: [
+          "createdAt",
+          "updatedAt",
+          "UserId",
+          "CityId",
+          "userId",
+          "cityId",
+        ],
+      },
     });
     res.send({ data: newHouse });
   } catch (error) {
@@ -104,9 +197,28 @@ exports.update = async (req, res) => {
           model: City,
           attributes: { exclude: ["createdAt", "updatedAt"] },
         },
+        {
+          model: User,
+          attributes: ["id", "username"],
+          include: [
+            {
+              model: List,
+              attributes: ["id", "name"],
+            },
+          ],
+        },
       ],
       where: { id: req.params.id },
-      attributes: { exclude: ["createdAt", "updatedAt", "CityId", "cityId"] },
+      attributes: {
+        exclude: [
+          "createdAt",
+          "updatedAt",
+          "UserId",
+          "CityId",
+          "userId",
+          "cityId",
+        ],
+      },
     });
     res.send({ data: newHouse });
   } catch (error) {
