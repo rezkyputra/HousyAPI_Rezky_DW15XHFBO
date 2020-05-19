@@ -19,7 +19,7 @@ module.exports = {
         },
         {
           id: 2,
-          fullName: "Muhammad Akhsan",
+          fullname: "Muhammad Akhsan",
           username: "Akhsan",
           email: "akhsan@gamil.com",
           password: "123",
