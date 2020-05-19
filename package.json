@@ -4,9 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js"
+    "start": "node index",
+    "dev": "nodemon index"
   },
   "author": "",
   "license": "ISC",
@@ -16,11 +15,10 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mariadb": "^2.3.1",
-    "pg": "^7.4.3",
     "nodemon": "^2.0.3",
-    "sequelize": "^5.21.6"
-  },
-  "devDependencies": {
+    "pg": "^8.2.1",
+    "sequelize": "^5.21.6",
     "sequelize-cli": "^5.5.1"
-  }
+  },
+  "devDependencies": {}
 }
