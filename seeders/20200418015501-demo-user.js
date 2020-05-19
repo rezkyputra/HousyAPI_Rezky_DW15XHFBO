@@ -7,7 +7,7 @@ module.exports = {
       [
         {
           id: 1,
-          fullName: "Rezky Putra Akkif",
+          fullname: "Rezky Putra Akkif",
           username: "putra",
           email: "rezky@gmail.com",
           password: "123",
