@@ -16,6 +16,10 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
+      stay: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
       houseId: {
         allowNull: false,
         type: Sequelize.INTEGER,
@@ -32,7 +36,7 @@ module.exports = {
       },
       status: {
         type: Sequelize.ENUM,
-        values: ["waiting payment", "pending", "cancel"],
+        values: ["waiting payment", "waiting approve", "cancel", "approve"],
         defauldValue: "waiting payment",
       },
       attachment: {

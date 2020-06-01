@@ -5,11 +5,12 @@ module.exports = (sequelize, DataTypes) => {
     {
       checkin: DataTypes.DATE,
       checkout: DataTypes.DATE,
+      stay: DataTypes.INTEGER,
       houseId: DataTypes.INTEGER,
       total: DataTypes.INTEGER,
       status: {
         type: DataTypes.ENUM,
-        values: ["waiting payment", "pending", "cancel"],
+        values: ["waiting payment", "waiting approve", "cancel", "approve"],
         defauldValue: "waiting payment",
       },
       attachment: DataTypes.STRING,

@@ -212,3 +212,52 @@ exports.show = async (req, res) => {
     console.log(error);
   }
 };
+
+exports.showall = async (req, res) => {
+  try {
+    const order = await transaction.findAll({
+      include: [
+        {
+          model: House,
+          attributes: {
+            exclude: [
+              "createdAt",
+              "updatedAt",
+              "CityId",
+              "cityId",
+              "UserId",
+              "userId",
+            ],
+          },
+          include: [
+            {
+              model: City,
+              attributes: { exclude: ["createdAt", "updatedAt"] },
+            },
+            {
+              model: User,
+              attributes: ["id", "username"],
+            },
+          ],
+        },
+        {
+          model: User,
+          attributes: ["id", "username"],
+          include: [
+            {
+              model: List,
+              attributes: ["id", "name"],
+            },
+          ],
+        },
+      ],
+      where: { userId: req.params.id },
+      attributes: {
+        exclude: ["updatedAt", "HouseId", "houseId", "UserId", "userId"],
+      },
+    });
+    res.send({ data: order });
+  } catch (error) {
+    console.log(error);
+  }
+};

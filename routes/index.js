@@ -1,9 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {
-  index: findUsers,
-  destroy: deleteUser,
-} = require("../controllers/user");
+const { index: findUsers, show: findUser } = require("../controllers/user");
 const {
   index: findHouses,
   show: findHouse,
@@ -14,6 +11,7 @@ const {
 const {
   index: findOrders,
   show: findOrder,
+  showall: findAllOrder,
   create: addOrder,
   update: updateOrder,
 } = require("../controllers/transaction");
@@ -36,11 +34,12 @@ router.delete("/house/:id", authenticated, deleteHouse);
 //order
 router.get("/orders", findOrders);
 router.get("/order/:id", findOrder);
+router.get("/orders/:id", findAllOrder);
 router.post("/order", authenticated, addOrder);
 router.patch("/order/:id", authenticated, updateOrder);
 
 // User
-router.get("/users", findUsers);
-router.delete("/user/:id", deleteUser);
+router.get("/users", authenticated, findUsers);
+router.get("/user/:id", authenticated, findUser);
 
 module.exports = router;

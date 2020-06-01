@@ -17,10 +17,19 @@ exports.index = async (req, res) => {
   }
 };
 
-exports.destroy = async (req, res) => {
+exports.show = async (req, res) => {
   try {
-    const users = await User.destroy({ where: { id: req.params.id } });
-    res.send({ data: users });
+    const user = await User.findOne({
+      where: { id: req.params.id },
+      include: [
+        {
+          model: List,
+          attributes: { exclude: ["createdAt", "updatedAt"] },
+        },
+      ],
+      attributes: { exclude: ["createdAt", "updatedAt", "ListId"] },
+    });
+    res.send({ data: user });
   } catch (error) {
     console.log(error);
   }

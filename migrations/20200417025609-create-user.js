@@ -35,6 +35,9 @@ module.exports = {
         values: ["male", "female"],
         defauldValue: "male",
       },
+      phone: {
+        type: Sequelize.STRING,
+      },
       address: {
         type: Sequelize.STRING,
       },
