@@ -53,6 +53,10 @@ module.exports = {
         onUpdate: "RESTRICT",
         onDelete: "RESTRICT",
       },
+      fromId: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

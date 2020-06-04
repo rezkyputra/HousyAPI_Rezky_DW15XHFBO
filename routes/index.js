@@ -11,7 +11,8 @@ const {
 const {
   index: findOrders,
   show: findOrder,
-  showall: findAllOrder,
+  showalltenant: findAllOrder,
+  showallowner: findAllOwner,
   create: addOrder,
   update: updateOrder,
 } = require("../controllers/transaction");
@@ -34,12 +35,13 @@ router.delete("/house/:id", authenticated, deleteHouse);
 //order
 router.get("/orders", findOrders);
 router.get("/order/:id", findOrder);
-router.get("/orders/:id", findAllOrder);
+router.get("/orders/:id", authenticated, findAllOrder);
+router.get("/ordersowner/:id", authenticated, findAllOwner);
 router.post("/order", authenticated, addOrder);
 router.patch("/order/:id", authenticated, updateOrder);
 
 // User
-router.get("/users", authenticated, findUsers);
+router.get("/users", findUsers);
 router.get("/user/:id", authenticated, findUser);
 
 module.exports = router;

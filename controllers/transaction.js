@@ -1,4 +1,5 @@
 const { House, transaction, City, User, List } = require("../models");
+const { Op } = require("sequelize");
 
 exports.index = async (req, res) => {
   try {
@@ -29,7 +30,7 @@ exports.index = async (req, res) => {
         },
         {
           model: User,
-          attributes: ["id", "username"],
+          attributes: ["id", "fullName", "phone", "gender"],
         },
       ],
       attributes: {
@@ -186,13 +187,7 @@ exports.show = async (req, res) => {
         },
         {
           model: User,
-          attributes: ["id", "username"],
-          include: [
-            {
-              model: List,
-              attributes: ["id", "name"],
-            },
-          ],
+          attributes: ["id", "fullName", "phone", "gender"],
         },
       ],
       where: { id: req.params.id },
@@ -213,7 +208,8 @@ exports.show = async (req, res) => {
   }
 };
 
-exports.showall = async (req, res) => {
+//show all tenant
+exports.showalltenant = async (req, res) => {
   try {
     const order = await transaction.findAll({
       include: [
@@ -242,7 +238,9 @@ exports.showall = async (req, res) => {
         },
         {
           model: User,
-          attributes: ["id", "username"],
+          attributes: {
+            exclude: ["createdAt", "updatedAt", "ListId", "listId"],
+          },
           include: [
             {
               model: List,
@@ -252,6 +250,52 @@ exports.showall = async (req, res) => {
         },
       ],
       where: { userId: req.params.id },
+      attributes: {
+        exclude: ["updatedAt", "HouseId", "houseId", "UserId", "userId"],
+      },
+    });
+    res.send({ data: order });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//show all owner
+exports.showallowner = async (req, res) => {
+  try {
+    const order = await transaction.findAll({
+      include: [
+        {
+          model: House,
+          attributes: {
+            exclude: [
+              "createdAt",
+              "updatedAt",
+              "CityId",
+              "cityId",
+              "UserId",
+              "userId",
+            ],
+          },
+          include: [
+            {
+              model: City,
+              attributes: { exclude: ["createdAt", "updatedAt"] },
+            },
+            {
+              model: User,
+              attributes: ["id", "fullName", "phone", "gender"],
+            },
+          ],
+        },
+        {
+          model: User,
+          attributes: {
+            exclude: ["createdAt", "updatedAt", "ListId", "listId"],
+          },
+        },
+      ],
+      where: { fromId: req.params.id },
       attributes: {
         exclude: ["updatedAt", "HouseId", "houseId", "UserId", "userId"],
       },

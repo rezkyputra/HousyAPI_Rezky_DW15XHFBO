@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       attachment: DataTypes.STRING,
       userId: DataTypes.INTEGER,
+      fromId: DataTypes.INTEGER,
     },
     {}
   );

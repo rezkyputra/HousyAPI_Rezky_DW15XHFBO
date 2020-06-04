@@ -24,6 +24,8 @@ module.exports = (sequelize, DataTypes) => {
       },
       bedRoom: DataTypes.INTEGER,
       bathRoom: DataTypes.INTEGER,
+      sqft: DataTypes.INTEGER,
+      desc: DataTypes.STRING,
       userId: DataTypes.INTEGER,
     },
     {}

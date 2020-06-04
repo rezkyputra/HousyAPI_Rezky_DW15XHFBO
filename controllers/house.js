@@ -12,7 +12,7 @@ exports.index = async (req, res) => {
           },
           {
             model: User,
-            attributes: ["id", "username"],
+            attributes: ["id", "fullname"],
             include: [
               {
                 model: List,
@@ -124,7 +124,7 @@ exports.show = async (req, res) => {
         },
         {
           model: User,
-          attributes: ["id", "username"],
+          attributes: ["id", "fullname"],
           include: [
             {
               model: List,
@@ -162,7 +162,7 @@ exports.create = async (req, res) => {
         },
         {
           model: User,
-          attributes: ["id", "username"],
+          attributes: ["id", "fullname"],
           include: [
             {
               model: List,
