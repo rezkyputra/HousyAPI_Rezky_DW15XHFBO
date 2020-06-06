@@ -20,8 +20,8 @@ module.exports = (sequelize, DataTypes) => {
     {}
   );
   transaction.associate = function (models) {
-    transaction.belongsTo(models.House);
-    transaction.belongsTo(models.User);
+    transaction.belongsTo(models.house);
+    transaction.belongsTo(models.user);
   };
   return transaction;
 };

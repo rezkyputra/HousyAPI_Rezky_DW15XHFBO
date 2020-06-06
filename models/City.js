@@ -1,14 +1,14 @@
 "use strict";
 module.exports = (sequelize, DataTypes) => {
-  const City = sequelize.define(
-    "City",
+  const city = sequelize.define(
+    "city",
     {
       name: DataTypes.STRING,
     },
     {}
   );
-  City.associate = function (models) {
-    City.hasMany(models.House);
+  city.associate = function (models) {
+    city.hasMany(models.house);
   };
-  return City;
+  return city;
 };

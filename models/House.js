@@ -1,7 +1,7 @@
 "use strict";
 module.exports = (sequelize, DataTypes) => {
-  const House = sequelize.define(
-    "House",
+  const house = sequelize.define(
+    "house",
     {
       name: DataTypes.STRING,
       cityId: DataTypes.INTEGER,
@@ -30,10 +30,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     {}
   );
-  House.associate = function (models) {
-    House.belongsTo(models.City);
-    House.belongsTo(models.User);
-    House.hasMany(models.transaction);
+  house.associate = function (models) {
+    house.belongsTo(models.city);
+    house.belongsTo(models.user);
+    house.hasMany(models.transaction);
   };
-  return House;
+  return house;
 };

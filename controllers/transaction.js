@@ -1,9 +1,9 @@
-const { House, transaction, City, User, List } = require("../models");
+const { House, Transaction, City, User, List } = require("../models");
 const { Op } = require("sequelize");
 
 exports.index = async (req, res) => {
   try {
-    const order = await transaction.findAll({
+    const order = await Transaction.findAll({
       include: [
         {
           model: House,
@@ -52,8 +52,8 @@ exports.index = async (req, res) => {
 
 exports.create = async (req, res) => {
   try {
-    const order = await transaction.create(req.body);
-    const newOrder = await transaction.findOne({
+    const order = await Transaction.create(req.body);
+    const newOrder = await Transaction.findOne({
       where: { id: order.id },
       include: [
         {
@@ -103,8 +103,8 @@ exports.create = async (req, res) => {
 
 exports.update = async (req, res) => {
   try {
-    await transaction.update(req.body, { where: { id: req.params.id } });
-    const order = await transaction.findOne({
+    await Transaction.update(req.body, { where: { id: req.params.id } });
+    const order = await Transaction.findOne({
       include: [
         {
           model: House,
@@ -160,7 +160,7 @@ exports.update = async (req, res) => {
 
 exports.show = async (req, res) => {
   try {
-    const order = await transaction.findOne({
+    const order = await Transaction.findOne({
       include: [
         {
           model: House,
@@ -211,7 +211,7 @@ exports.show = async (req, res) => {
 //show all tenant
 exports.showalltenant = async (req, res) => {
   try {
-    const order = await transaction.findAll({
+    const order = await Transaction.findAll({
       include: [
         {
           model: House,
@@ -263,7 +263,7 @@ exports.showalltenant = async (req, res) => {
 //show all owner
 exports.showallowner = async (req, res) => {
   try {
-    const order = await transaction.findAll({
+    const order = await Transaction.findAll({
       include: [
         {
           model: House,
