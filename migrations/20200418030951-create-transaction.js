@@ -24,7 +24,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: "houses",
+          model: "Houses",
           key: "id",
         },
         onUpdate: "RESTRICT",
@@ -47,7 +47,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: "users",
+          model: "Users",
           key: "id",
         },
         onUpdate: "RESTRICT",

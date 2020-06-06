@@ -1,14 +1,14 @@
 "use strict";
 module.exports = (sequelize, DataTypes) => {
-  const list = sequelize.define(
-    "list",
+  const List = sequelize.define(
+    "List",
     {
       name: DataTypes.STRING,
     },
     {}
   );
-  list.associate = function (models) {
-    list.hasMany(models.user);
+  List.associate = function (models) {
+    List.hasMany(models.User);
   };
-  return list;
+  return List;
 };

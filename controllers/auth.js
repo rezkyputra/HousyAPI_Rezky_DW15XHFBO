@@ -1,23 +1,23 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const { user } = require("../models");
+const { User } = require("../models");
 
 exports.login = async (req, res) => {
   try {
     const { username, password } = req.body;
-    const User = await user.findOne({
+    const user = await User.findOne({
       where: {
         username,
       },
     });
-    if (!User) {
+    if (!user) {
       res.status(401).send({ message: "Invalid login" });
     } else {
-      const list = User.listId;
-      const id = User.id;
-      bcrypt.compare(password, User.password, (err, result) => {
+      const list = user.listId;
+      const id = user.id;
+      bcrypt.compare(password, user.password, (err, result) => {
         if (result) {
-          jwt.sign({ id: User.id }, "this-is-my-secret-key", (err, token) => {
+          jwt.sign({ id: user.id }, "this-is-my-secret-key", (err, token) => {
             const data = {
               username,
               token,
@@ -41,18 +41,18 @@ exports.register = async (req, res) => {
   try {
     const saltRounds = 10;
     const { username, password } = req.body;
-    const User = await user.findOne({
+    const user = await User.findOne({
       where: {
         username,
       },
     });
-    if (!User) {
+    if (!user) {
       bcrypt.hash(password, saltRounds, async (err, hash) => {
         const value = {
           ...req.body,
           password: hash,
         };
-        const newUser = await user.create(value);
+        const newUser = await User.create(value);
         jwt.sign({ id: newUser.id }, "this-is-my-secret-key", (err, token) => {
           const id = newUser.id;
           const list = newUser.listId;

@@ -1,21 +1,21 @@
-const { house, city, user, list } = require("../models");
+const { House, City, User, List } = require("../models");
 const { Op } = require("sequelize");
 
 exports.index = async (req, res) => {
   try {
     if (req.query.typeRent && req.query.belowPrice) {
-      const houses = await house.findAll({
+      const houses = await House.findAll({
         include: [
           {
-            model: city,
+            model: City,
             attributes: ["id", "name"],
           },
           {
-            model: user,
+            model: User,
             attributes: ["id", "fullname"],
             include: [
               {
-                model: list,
+                model: List,
                 attributes: ["id", "name"],
               },
             ],
@@ -31,8 +31,8 @@ exports.index = async (req, res) => {
           exclude: [
             "createdAt",
             "updatedAt",
-            "userId",
-            "cityId",
+            "UserId",
+            "CityId",
             "userId",
             "cityId",
           ],
@@ -40,18 +40,18 @@ exports.index = async (req, res) => {
       });
       res.send({ data: houses });
     } else if (req.query.typeRent || req.query.belowPrice) {
-      const houses = await house.findAll({
+      const houses = await House.findAll({
         include: [
           {
-            model: city,
+            model: City,
             attributes: ["id", "name"],
           },
           {
-            model: user,
+            model: User,
             attributes: ["id", "username"],
             include: [
               {
-                model: list,
+                model: List,
                 attributes: ["id", "name"],
               },
             ],
@@ -67,8 +67,8 @@ exports.index = async (req, res) => {
           exclude: [
             "createdAt",
             "updatedAt",
-            "userId",
-            "cityId",
+            "UserId",
+            "CityId",
             "userId",
             "cityId",
           ],
@@ -77,18 +77,18 @@ exports.index = async (req, res) => {
 
       res.send({ data: houses });
     } else {
-      const houses = await house.findAll({
+      const houses = await House.findAll({
         include: [
           {
-            model: city,
+            model: City,
             attributes: ["id", "name"],
           },
           {
-            model: user,
+            model: User,
             attributes: ["id", "username"],
             include: [
               {
-                model: list,
+                model: List,
                 attributes: ["id", "name"],
               },
             ],
@@ -98,8 +98,8 @@ exports.index = async (req, res) => {
           exclude: [
             "createdAt",
             "updatedAt",
-            "userId",
-            "cityId",
+            "UserId",
+            "CityId",
             "userId",
             "cityId",
           ],
@@ -115,50 +115,19 @@ exports.index = async (req, res) => {
 
 exports.show = async (req, res) => {
   try {
-    const House = await house.findOne({
+    const house = await House.findOne({
       where: { id: req.params.id },
       include: [
         {
-          model: city,
+          model: City,
           attributes: { exclude: ["createdAt", "updatedAt"] },
         },
         {
-          model: user,
+          model: User,
           attributes: ["id", "fullname"],
           include: [
             {
-              model: list,
-              attributes: ["id", "name"],
-            },
-          ],
-        },
-      ],
-      attributes: {
-        exclude: ["createdAt", "updatedAt", "userId", "cityId"],
-      },
-    });
-    res.send({ data: House });
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-exports.create = async (req, res) => {
-  try {
-    const House = await house.create(req.body);
-    const newHouse = await house.findOne({
-      where: { id: House.id },
-      include: [
-        {
-          model: city,
-          attributes: { exclude: ["createdAt", "updatedAt"] },
-        },
-        {
-          model: user,
-          attributes: ["id", "fullname"],
-          include: [
-            {
-              model: list,
+              model: List,
               attributes: ["id", "name"],
             },
           ],
@@ -168,8 +137,46 @@ exports.create = async (req, res) => {
         exclude: [
           "createdAt",
           "updatedAt",
+          "UserId",
+          "CityId",
           "userId",
           "cityId",
+        ],
+      },
+    });
+    res.send({ data: house });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.create = async (req, res) => {
+  try {
+    const house = await House.create(req.body);
+    const newHouse = await House.findOne({
+      where: { id: house.id },
+      include: [
+        {
+          model: City,
+          attributes: { exclude: ["createdAt", "updatedAt"] },
+        },
+        {
+          model: User,
+          attributes: ["id", "fullname"],
+          include: [
+            {
+              model: List,
+              attributes: ["id", "name"],
+            },
+          ],
+        },
+      ],
+      attributes: {
+        exclude: [
+          "createdAt",
+          "updatedAt",
+          "UserId",
+          "CityId",
           "userId",
           "cityId",
         ],
@@ -183,19 +190,19 @@ exports.create = async (req, res) => {
 
 exports.update = async (req, res) => {
   try {
-    await house.update(req.body, { where: { id: req.params.id } });
-    const newhouse = await house.findOne({
+    await House.update(req.body, { where: { id: req.params.id } });
+    const newHouse = await House.findOne({
       include: [
         {
-          model: city,
+          model: City,
           attributes: { exclude: ["createdAt", "updatedAt"] },
         },
         {
-          model: user,
+          model: User,
           attributes: ["id", "username"],
           include: [
             {
-              model: list,
+              model: List,
               attributes: ["id", "name"],
             },
           ],
@@ -206,14 +213,14 @@ exports.update = async (req, res) => {
         exclude: [
           "createdAt",
           "updatedAt",
-          "userId",
-          "cityId",
+          "UserId",
+          "CityId",
           "userId",
           "cityId",
         ],
       },
     });
-    res.send({ data: newhouse });
+    res.send({ data: newHouse });
   } catch (error) {
     console.log(error);
   }
@@ -221,8 +228,8 @@ exports.update = async (req, res) => {
 
 exports.destroy = async (req, res) => {
   try {
-    const delhouse = await house.destroy({ where: { id: req.params.id } });
-    res.send({ data: delhouse });
+    const delHouse = await House.destroy({ where: { id: req.params.id } });
+    res.send({ data: delHouse });
   } catch (error) {
     console.log(error);
   }
