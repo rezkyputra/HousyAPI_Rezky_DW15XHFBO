@@ -2,7 +2,8 @@ const { User, List } = require("../models");
 
 exports.index = async (req, res) => {
   try {
-    const users = await User.findAll({
+    const users = await User
+      .findAll
       // include: [
       //   {
       //     model: List,
@@ -10,7 +11,7 @@ exports.index = async (req, res) => {
       //   },
       // ],
       // attributes: { exclude: ["createdAt", "updatedAt", "ListId", "listId"] },
-    });
+      ();
     res.send({ data: users });
   } catch (error) {
     console.log("error");
