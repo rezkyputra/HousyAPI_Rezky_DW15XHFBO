@@ -4,8 +4,7 @@
     "password": "root",
     "database": "housy",
     "host": "127.0.0.1",
-    "dialect": "mariadb",
-    "operatorsAliases": false
+    "dialect": "mariadb"
   },
   "test": {
     "username": "root",

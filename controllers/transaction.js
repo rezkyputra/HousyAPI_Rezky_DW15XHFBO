@@ -1,35 +1,35 @@
-const { House, Transaction, City, User, List } = require("../models");
+const { house, transaction, city, user, list } = require("../models");
 const { Op } = require("sequelize");
 
 exports.index = async (req, res) => {
   try {
-    const order = await Transaction.findAll({
+    const order = await transaction.findAll({
       include: [
         {
-          model: House,
+          model: house,
           attributes: {
             exclude: [
               "createdAt",
               "updatedAt",
-              "CityId",
-              "UserId",
+              "cityId",
+              "userId",
               "cityId",
               "userId",
             ],
           },
           include: [
             {
-              model: City,
+              model: city,
               attributes: { exclude: ["createdAt", "updatedAt"] },
             },
             {
-              model: User,
+              model: user,
               attributes: ["id", "username"],
             },
           ],
         },
         {
-          model: User,
+          model: user,
           attributes: ["id", "fullName", "phone", "gender"],
         },
       ],
@@ -37,9 +37,9 @@ exports.index = async (req, res) => {
         exclude: [
           "createdAt",
           "updatedAt",
-          "HouseId",
           "houseId",
-          "UserId",
+          "houseId",
+          "userId",
           "userId",
         ],
       },
@@ -52,35 +52,35 @@ exports.index = async (req, res) => {
 
 exports.create = async (req, res) => {
   try {
-    const order = await Transaction.create(req.body);
-    const newOrder = await Transaction.findOne({
+    const order = await transaction.create(req.body);
+    const newOrder = await transaction.findOne({
       where: { id: order.id },
       include: [
         {
-          model: House,
+          model: house,
           attributes: {
             exclude: [
               "createdAt",
               "updatedAt",
-              "CityId",
-              "UserId",
+              "cityId",
+              "userId",
               "cityId",
               "userId",
             ],
           },
           include: [
             {
-              model: City,
+              model: city,
               attributes: ["id", "name"],
             },
             {
-              model: User,
+              model: user,
               attributes: ["id", "username"],
             },
           ],
         },
         {
-          model: User,
+          model: user,
           attributes: ["id", "username"],
         },
       ],
@@ -88,9 +88,9 @@ exports.create = async (req, res) => {
         exclude: [
           "createdAt",
           "updatedAt",
-          "HouseId",
           "houseId",
-          "UserId",
+          "houseId",
+          "userId",
           "userId",
         ],
       },
@@ -103,38 +103,38 @@ exports.create = async (req, res) => {
 
 exports.update = async (req, res) => {
   try {
-    await Transaction.update(req.body, { where: { id: req.params.id } });
-    const order = await Transaction.findOne({
+    await transaction.update(req.body, { where: { id: req.params.id } });
+    const order = await transaction.findOne({
       include: [
         {
-          model: House,
+          model: house,
           attributes: {
             exclude: [
               "createdAt",
               "updatedAt",
-              "CityId",
-              "UserId",
+              "cityId",
+              "userId",
               "cityId",
               "userId",
             ],
           },
           include: [
             {
-              model: City,
+              model: city,
               attributes: { exclude: ["createdAt", "updatedAt"] },
             },
             {
-              model: User,
+              model: user,
               attributes: ["id", "username"],
             },
           ],
         },
         {
-          model: User,
+          model: user,
           attributes: ["id", "username"],
           include: [
             {
-              model: List,
+              model: list,
               attributes: ["id", "name"],
             },
           ],
@@ -145,9 +145,9 @@ exports.update = async (req, res) => {
         exclude: [
           "createdAt",
           "updatedAt",
-          "HouseId",
           "houseId",
-          "UserId",
+          "houseId",
+          "userId",
           "userId",
         ],
       },
@@ -160,33 +160,33 @@ exports.update = async (req, res) => {
 
 exports.show = async (req, res) => {
   try {
-    const order = await Transaction.findOne({
+    const order = await transaction.findOne({
       include: [
         {
-          model: House,
+          model: house,
           attributes: {
             exclude: [
               "createdAt",
               "updatedAt",
-              "CityId",
               "cityId",
-              "UserId",
+              "cityId",
+              "userId",
               "userId",
             ],
           },
           include: [
             {
-              model: City,
+              model: city,
               attributes: { exclude: ["createdAt", "updatedAt"] },
             },
             {
-              model: User,
+              model: user,
               attributes: ["id", "username"],
             },
           ],
         },
         {
-          model: User,
+          model: user,
           attributes: ["id", "fullName", "phone", "gender"],
         },
       ],
@@ -195,9 +195,9 @@ exports.show = async (req, res) => {
         exclude: [
           "createdAt",
           "updatedAt",
-          "HouseId",
           "houseId",
-          "UserId",
+          "houseId",
+          "userId",
           "userId",
         ],
       },
@@ -211,39 +211,39 @@ exports.show = async (req, res) => {
 //show all tenant
 exports.showalltenant = async (req, res) => {
   try {
-    const order = await Transaction.findAll({
+    const order = await transaction.findAll({
       include: [
         {
-          model: House,
+          model: house,
           attributes: {
             exclude: [
               "createdAt",
               "updatedAt",
-              "CityId",
               "cityId",
-              "UserId",
+              "cityId",
+              "userId",
               "userId",
             ],
           },
           include: [
             {
-              model: City,
+              model: city,
               attributes: { exclude: ["createdAt", "updatedAt"] },
             },
             {
-              model: User,
+              model: user,
               attributes: ["id", "username"],
             },
           ],
         },
         {
-          model: User,
+          model: user,
           attributes: {
-            exclude: ["createdAt", "updatedAt", "ListId", "listId"],
+            exclude: ["createdAt", "updatedAt", "listId", "listId"],
           },
           include: [
             {
-              model: List,
+              model: list,
               attributes: ["id", "name"],
             },
           ],
@@ -251,7 +251,7 @@ exports.showalltenant = async (req, res) => {
       ],
       where: { userId: req.params.id },
       attributes: {
-        exclude: ["updatedAt", "HouseId", "houseId", "UserId", "userId"],
+        exclude: ["updatedAt", "houseId", "houseId", "userId", "userId"],
       },
     });
     res.send({ data: order });
@@ -263,41 +263,41 @@ exports.showalltenant = async (req, res) => {
 //show all owner
 exports.showallowner = async (req, res) => {
   try {
-    const order = await Transaction.findAll({
+    const order = await transaction.findAll({
       include: [
         {
-          model: House,
+          model: house,
           attributes: {
             exclude: [
               "createdAt",
               "updatedAt",
-              "CityId",
               "cityId",
-              "UserId",
+              "cityId",
+              "userId",
               "userId",
             ],
           },
           include: [
             {
-              model: City,
+              model: city,
               attributes: { exclude: ["createdAt", "updatedAt"] },
             },
             {
-              model: User,
+              model: user,
               attributes: ["id", "fullName", "phone", "gender"],
             },
           ],
         },
         {
-          model: User,
+          model: user,
           attributes: {
-            exclude: ["createdAt", "updatedAt", "ListId", "listId"],
+            exclude: ["createdAt", "updatedAt", "listId", "listId"],
           },
         },
       ],
       where: { fromId: req.params.id },
       attributes: {
-        exclude: ["updatedAt", "HouseId", "houseId", "UserId", "userId"],
+        exclude: ["updatedAt", "houseId", "houseId", "userId", "userId"],
       },
     });
     res.send({ data: order });

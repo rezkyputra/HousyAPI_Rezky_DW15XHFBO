@@ -1,15 +1,15 @@
-const { User, List } = require("../models");
+const { user, list } = require("../models");
 
 exports.index = async (req, res) => {
   try {
-    const users = await User.findAll({
+    const users = await user.findAll({
       include: [
         {
-          model: List,
+          model: list,
           attributes: { exclude: ["createdAt", "updatedAt"] },
         },
       ],
-      attributes: { exclude: ["createdAt", "updatedAt", "ListId", "listId"] },
+      attributes: { exclude: ["createdAt", "updatedAt", "listId", "listId"] },
     });
     res.send({ data: users });
   } catch (error) {
@@ -19,17 +19,17 @@ exports.index = async (req, res) => {
 
 exports.show = async (req, res) => {
   try {
-    const user = await User.findOne({
+    const User = await user.findOne({
       where: { id: req.params.id },
       include: [
         {
-          model: List,
+          model: list,
           attributes: { exclude: ["createdAt", "updatedAt"] },
         },
       ],
-      attributes: { exclude: ["createdAt", "updatedAt", "ListId"] },
+      attributes: { exclude: ["createdAt", "updatedAt", "listId"] },
     });
-    res.send({ data: user });
+    res.send({ data: User });
   } catch (error) {
     console.log(error);
   }
